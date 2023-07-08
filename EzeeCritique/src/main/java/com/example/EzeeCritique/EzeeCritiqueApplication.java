@@ -10,4 +10,5 @@ public class EzeeCritiqueApplication {
 		SpringApplication.run(EzeeCritiqueApplication.class, args);
 	}
 
+
 }
