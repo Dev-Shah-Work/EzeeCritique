@@ -34,7 +34,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if(request.getServletPath().matches("/api/v1/auth/register | /api/v1/auth/authenticate")){
+        if(request.getServletPath().matches("/api/ezeecritique/user/auth/register | /api/ezeecritique/user/auth/login")){
             filterChain.doFilter(request,response);
         }
         else {
@@ -61,8 +61,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         }
     }
-    public boolean isAdmin(){
-        return "admin".equalsIgnoreCase((String) claims.get("role"));
+    public boolean isBrand(){
+        return "brand".equalsIgnoreCase((String) claims.get("role"));
     }
     public boolean isUser(){
         return "user".equalsIgnoreCase((String) claims.get("role"));

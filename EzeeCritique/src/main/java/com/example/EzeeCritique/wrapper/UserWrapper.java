@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserWrapper {
     private Integer id;
-    private String firstName;
-    private String lastName;
-    private String email;
     private String userName;
-    private String status;
+    private String name;
 
 }

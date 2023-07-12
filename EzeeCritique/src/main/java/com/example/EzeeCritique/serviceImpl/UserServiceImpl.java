@@ -5,6 +5,7 @@ import com.example.EzeeCritique.jwt.CustomerUserDetailsService;
 import com.example.EzeeCritique.jwt.JwtFilter;
 import com.example.EzeeCritique.jwt.JwtUtil;
 import com.example.EzeeCritique.model.User;
+import com.example.EzeeCritique.repo.ReviewRepo;
 import com.example.EzeeCritique.repo.UserRepo;
 import com.example.EzeeCritique.service.UserService;
 import com.example.EzeeCritique.wrapper.UserWrapper;
@@ -45,6 +46,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepo userRepo;
     @Autowired
+    ReviewRepo reviewRepo;
+    @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -58,7 +61,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<String> signup(Map<String, String> requestMap) {
         try{
             if(this.validateSignupMap(requestMap)){
-                User user= userRepo.findByEmailId(requestMap.get("email"));
+                User user= userRepo.findByUsername(requestMap.get("username"));
                 if(Objects.isNull(user)){
                     userRepo.save(this.getUserFromMap(requestMap));
                     return CritiqueUtils.getResponseEntity("Successfully Registered", HttpStatus.OK);
@@ -71,17 +74,16 @@ public class UserServiceImpl implements UserService {
         }catch (Exception exception) {
             exception.printStackTrace();
         }
-        return  CritiqueUtils.getResponseEntity("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
+        return  CritiqueUtils.getResponseEntity("Something Went Wrong in service implementation", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
 
     private boolean validateSignupMap(Map<String, String> requestMap) {
-        if(requestMap.containsKey("firstName")
-                && requestMap.containsKey("lastName")
-                && requestMap.containsKey("userName")
-                && requestMap.containsKey("email")
-                && requestMap.containsKey("password")){
+        if(requestMap.containsKey("username")
+                && requestMap.containsKey("name")
+                && requestMap.containsKey("password")
+                && requestMap.containsKey("role")){
             return true;
         }
         return  false;
@@ -89,10 +91,10 @@ public class UserServiceImpl implements UserService {
     private User getUserFromMap(Map<String, String> requestMap) {
         User user= new User();
         user.setName(requestMap.get("name"));
-        user.setUserName(requestMap.get("userName"));
+        user.setUsername(requestMap.get("username"));
 //        user.setPassword(requestMap.get("password"));
         user.setPassword(passwordEncoder.encode(requestMap.get("password")));
-        user.setRole("user");
+        user.setRole(requestMap.get("role"));
         return user;
 
     }
@@ -101,20 +103,20 @@ public class UserServiceImpl implements UserService {
         log.info("Inside login");
         try{
             Authentication authentication= authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
-                    (requestMap.get("email"),requestMap.get("password")));
+                    (requestMap.get("username"),requestMap.get("password")));
             if(authentication.isAuthenticated()){
-                if(customerUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("true")){
+//                if(customerUserDetailsService.getUserDetail().getStatus().equalsIgnoreCase("true")){
 //                    return  new ResponseEntity<String>("{\"token\":\""+
 //                            jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getEmail(),
 //                                    customerUserDetailsService.getUserDetail().getRole())+"\"}",HttpStatus.OK);
                     return  new ResponseEntity<String>("{\"token\":\""+
-                            jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getEmail(),
+                            jwtUtil.generateToken(customerUserDetailsService.getUserDetail().getUsername(),
                                     customerUserDetailsService.getUserDetail().getRole())+"\",\"role\":\""+customerUserDetailsService.getUserDetail().getRole()+"\"}",HttpStatus.OK);
 
-                }
-                else{
-                    return new ResponseEntity<String>("{\"message\":\""+"Wait for admin approval"+"\"}",HttpStatus.BAD_REQUEST );
-                }
+//                }
+//                else{
+//                    return new ResponseEntity<String>("{\"message\":\""+"Wait for admin approval"+"\"}",HttpStatus.BAD_REQUEST );
+//                }
             }
         }catch (Exception exception){
             log.error("{}",exception);
@@ -123,15 +125,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<List<UserWrapper>> getAllUser() {
+    public ResponseEntity<List<User>> getBrands() {
         try{
-            if(jwtFilter.isAdmin()){
-                return new ResponseEntity<>(userRepo.getAllUser(),HttpStatus.OK);
-            }else
-                return new ResponseEntity<>(userRepo.getByUsername(jwtFilter.getCurrentUser()),HttpStatus.OK);
+            List<User> brands = userRepo.getByRole();
+            return new ResponseEntity<>(brands, HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    public ResponseEntity<User> getUserDetails() {
+        try{
+            return new ResponseEntity<>(userRepo.findByUsername(jwtFilter.getCurrentUser()),HttpStatus.OK);
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new User(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
-}
+    }
+
+//    @Override
+//    public ResponseEntity<List<UserWrapper>> getAllUser() {
+//        try{
+//            if(jwtFilter.isBrand()){
+//                return new ResponseEntity<>(userRepo.getAllUser(),HttpStatus.OK);
+//            }else
+//                return new ResponseEntity<>(userRepo.getByUsername(jwtFilter.getCurrentUser()),HttpStatus.OK);
+//        }catch(Exception ex){
+//            ex.printStackTrace();
+//        }
+//        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+
