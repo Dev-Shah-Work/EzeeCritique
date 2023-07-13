@@ -42,14 +42,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ResponseEntity<List<ReviewWrapper>> getReviewByUid(Map<String, Integer> requestMap) {
+    public ResponseEntity<List<Review>> getReviewByUid(Map<String, String> requestMap) {
         try{
             if(jwtFilter.isUser()){
-                Integer uid=requestMap.get("uid");
+                Integer uid=Integer.parseInt(requestMap.get("uid"));
                 List<Review> userReviews=reviewRepo.findByUid(uid);
-                
-
+                return new ResponseEntity<>(userReviews,HttpStatus.OK);
             }
+            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.UNAUTHORIZED);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -58,8 +58,15 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public ResponseEntity<List<ReviewWrapper>> getReviewByBname(Map<String, Integer> requestMap) {
+    public ResponseEntity<List<Review>> getReviewByBname(Map<String, String> requestMap) {
         try{
+            if(jwtFilter.isBrand()) {
+                String bname = requestMap.get("bname");
+                System.out.println(bname);
+                List<Review> brandReviews = reviewRepo.findByBname(requestMap.get("bname"));
+                return new ResponseEntity<>(brandReviews, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.UNAUTHORIZED);
 
         }catch(Exception ex){
             ex.printStackTrace();

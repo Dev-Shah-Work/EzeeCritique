@@ -2,6 +2,7 @@ package com.example.EzeeCritique.controllerImpl;
 
 import com.example.EzeeCritique.controller.ReviewControl;
 import com.example.EzeeCritique.error.CritiqueUtils;
+import com.example.EzeeCritique.model.Review;
 import com.example.EzeeCritique.service.ReviewService;
 import com.example.EzeeCritique.wrapper.ReviewWrapper;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class ReviewControllerImpl implements ReviewControl {
     @Override
     public ResponseEntity<String> addReview(Map<String, String> requestMap) {
         try{
-            reviewService.addReview(requestMap);
+          return  reviewService.addReview(requestMap);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -32,9 +33,9 @@ public class ReviewControllerImpl implements ReviewControl {
     }
 
     @Override
-    public ResponseEntity<List<ReviewWrapper>> getReviewByUid(Map<String, Integer> requestMap) {
+    public ResponseEntity<List<Review>> getReviewByUid(Map<String, String> requestMap) {
         try{
-            reviewService.getReviewByUid(requestMap);
+            return reviewService.getReviewByUid(requestMap);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -42,9 +43,9 @@ public class ReviewControllerImpl implements ReviewControl {
     }
 
     @Override
-    public ResponseEntity<List<ReviewWrapper>> getReviewByBname(Map<String, Integer> requestMap) {
+    public ResponseEntity<List<Review>> getReviewByBname(Map<String, String> requestMap) {
         try{
-            reviewService.getReviewByBname(requestMap);
+           return reviewService.getReviewByBname(requestMap);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -54,7 +55,7 @@ public class ReviewControllerImpl implements ReviewControl {
     @Override
     public ResponseEntity<String> updateReviews(Map<String, String> requestMap) {
         try{
-            reviewService.updateReviews(requestMap);
+           return reviewService.updateReviews(requestMap);
         }catch(Exception ex){
             ex.printStackTrace();
         }
@@ -64,7 +65,7 @@ public class ReviewControllerImpl implements ReviewControl {
     @Override
     public ResponseEntity<String> deleteReview(Integer id) {
         try{
-            reviewService.deleteReview(id);
+            return reviewService.deleteReview(id);
         }catch(Exception ex){
             ex.printStackTrace();
         }

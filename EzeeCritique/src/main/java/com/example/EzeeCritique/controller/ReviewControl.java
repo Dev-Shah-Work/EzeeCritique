@@ -1,5 +1,6 @@
 package com.example.EzeeCritique.controller;
 
+import com.example.EzeeCritique.model.Review;
 import com.example.EzeeCritique.wrapper.ReviewWrapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,11 @@ public interface ReviewControl {
     @PostMapping("/addReview")
     public ResponseEntity<String> addReview(@RequestBody Map<String,String> requestMap);
 
-    @GetMapping("/getReviewByUid")
-    public ResponseEntity<List<ReviewWrapper>> getReviewByUid(@RequestBody Map<String,Integer> requestMap);
+    @PostMapping("/getReviewByUid")
+    public ResponseEntity<List<Review>> getReviewByUid(@RequestBody Map<String,String> requestMap);
 
-    @GetMapping("/getReviewByBname")
-    public ResponseEntity<List<ReviewWrapper>> getReviewByBname(@RequestBody Map<String,Integer> requestMap);
+    @PostMapping("/getReviewByBname")
+    public ResponseEntity<List<Review>> getReviewByBname(@RequestBody Map<String,String> requestMap);
 
 
     @PostMapping("/updateReview")
