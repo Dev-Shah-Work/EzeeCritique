@@ -9,40 +9,40 @@ style="
     class="signup flex flex-col justify-center items-center mx-auto"
     *ngIf="!onLogin"
   >
-    <h1 class="font-victormono py-8 underline text-xl">Seller Sign-Up</h1>
+    <h1 class="font-victormono py-8 underline text-xl">Register on this platform</h1>
     <div class="flex justify-center items-center backdrop-blur-xl">
       <form
         action=""
-        #sellerSignupForm="ngForm"
-        (ngSubmit)="signup(sellerSignupForm.value)"
+        #registerForm="ngForm"
+        (ngSubmit)="signup(registerForm.value)"
         class="flex flex-col space-y-6 border-4 rounded-md border-black p-6 items-center justify-center"
       >
         <input
+          type="email"
+          placeholder="Enter Email"
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
+          ngModel
+          name="username"
+        />
+        <input
           type="text"
-          placeholder="Enter name"
+          placeholder="Enter Name"
           class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
           ngModel
           name="name"
         />
         <input
-          type="text"
-          placeholder="Enter e-mail"
-          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
-          ngModel
-          name="email"
-        />
-        <input
-          type="text"
-          placeholder="Enter password"
+          type="password"
+          placeholder="Enter Password"
           class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
           ngModel
           name="password"
         />
 
-        <select class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-3/4 " >
-          <option value="">Choose Role</option>
-          <option>{{'user'|titlecase}}</option>
-          <option>brand|titlecase</option>
+        <select class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-3/4 " ngModel name="role">
+          <option value="" disabled>Choose Role</option>
+          <option value="user">{{'user'|titlecase}}</option>
+          <option value="brand">{{'brand'|titlecase}}</option>
         </select>
 
         <button
@@ -51,7 +51,7 @@ style="
           Sign-Up
         </button>
         <button (click)="switchLogin()" class="text-blue-400">
-          Already an existing Seller? Login by clicking here
+          Already an existing user? Do login by clicking here
         </button>
       </form>
     </div>
@@ -61,21 +61,21 @@ style="
     class="signup flex flex-col justify-center items-center mx-auto"
     *ngIf="onLogin"
   >
-    <h1 class="font-victormono py-8 underline text-xl">Login</h1>
+    <h1 class="font-victormono py-8 underline text-xl">Login Here</h1>
     <div class="flex justify-center items-center">
       <form
         action=""
-        #sellerLogin="ngForm"
-        (ngSubmit)="login(sellerLogin.value)"
+        #userLogin="ngForm"
+        (ngSubmit)="login(userLogin.value)"
         class="flex flex-col space-y-6 border-4 rounded-md border-black p-6 items-center justify-center"
       >
         <span class="text-red-400">{{ authError }}</span>
         <input
-          type="text"
+          type="email"
           placeholder="Enter e-mail"
           class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
           ngModel
-          name="email"
+          name="username"
         />
         <input
           type="text"
@@ -90,7 +90,7 @@ style="
           Login
         </button>
         <button (click)="switchLogin()" class="text-blue-400">
-          A new seller? Do click here to sign-up
+          New to our platform? Click here to register 
         </button>
       </form>
     </div>

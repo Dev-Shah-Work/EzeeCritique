@@ -5,33 +5,40 @@ import { BrandPageComponent } from './brand-page/brand-page.component';
 import { UpdateReviewComponent } from './update-review/update-review.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { UserEntryComponent } from './user-entry/user-entry.component';
+import { InitialPageComponent } from './initial-page/initial-page.component';
+import { UserAuthGuard } from './user-auth-guard.guard';
 
 const routes: Routes = [
   {
-    path:'add-review',
-    component:AddReviewComponent
+    path: '',
+    component: InitialPageComponent,
   },
   {
-    path:'brand-page',
-    component:BrandPageComponent
+    path: 'add-review',
+    component: AddReviewComponent,
   },
   {
-    path:'update-review',
-    component:UpdateReviewComponent
+    path: 'brand-page',
+    component: BrandPageComponent,
   },
   {
-    path:'user-page',
-    component:UserPageComponent
+    path: 'update-review',
+    component: UpdateReviewComponent,
   },
   {
-    path:'user-entry',
-    component:UserEntryComponent
-  }
+    path: 'user-page',
+    component: UserPageComponent,
+    canActivate: [UserAuthGuard],
+  },
 
+  {
+    path: 'user-entry',
+    component: UserEntryComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
