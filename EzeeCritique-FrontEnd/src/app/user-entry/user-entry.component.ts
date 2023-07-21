@@ -21,6 +21,7 @@ export class UserEntryComponent {
     console.warn(data.id);
     this.user.addUser(data).subscribe((val) => {
       console.log(val);
+      this.onLogin=true
     });
   }
   login(data: User): void {

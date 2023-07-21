@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import User from '../model';
-import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService implements OnInit {
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    
   }
-  constructor(private http: HttpClient,private jwtHelper:JwtHelperService) {}
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
   token = localStorage.getItem('token');
 
   private baseURL = `http://localhost:8080/api/ezeecritique/user`;
@@ -30,5 +30,14 @@ export class UserService implements OnInit {
     }
     const isTokenExpired = this.jwtHelper.isTokenExpired(this.token);
     return !isTokenExpired;
+  }
+  getUserDetails() {
+    console.log(this.token);
+    
+    return this.http.get<User>(this.baseURL + '/userDetails', {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+      },
+    });
   }
 }
