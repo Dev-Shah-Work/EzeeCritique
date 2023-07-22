@@ -8,16 +8,13 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService implements OnInit {
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
   currentUser = {
     username: '',
     name: '',
     role: '',
   };
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {}
- 
 
   private baseURL = `http://localhost:8080/api/ezeecritique/user`;
   addUser(data: User) {
@@ -31,7 +28,7 @@ export class UserService implements OnInit {
     return this.http.post(this.baseURL + '/auth/login', loginUser);
   }
   authenticateToken() {
-    var token=localStorage.getItem("token")
+    var token = localStorage.getItem('token');
     if (token === null || token === undefined) {
       return false;
     }
@@ -42,13 +39,19 @@ export class UserService implements OnInit {
     var token = localStorage.getItem('token');
 
     console.log(token);
-    
+
     return this.http.get<User>(this.baseURL + '/userDetails', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
+    });
+  }
+  getBrands() {
+    var token = localStorage.getItem('token');
+    return this.http.get<User[]>(this.baseURL + '/getBrands', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }
-
-

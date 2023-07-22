@@ -1,0 +1,19 @@
+select option[value="Very Happy"]::before {
+  content: "\f599"; /* Unicode for the Font Awesome icon you want to use (fa-face-laugh) */
+  margin-right: 0.5rem;
+}
+
+select option[value="Satisfied"]::before {
+  content: "\f60a"; /* Unicode for the Font Awesome icon you want to use (fa-face-smile) */
+  margin-right: 0.5rem;
+}
+
+select option[value="Moderate"]::before {
+  content: "\f5c7"; /* Unicode for the Font Awesome icon you want to use (fa-face-meh) */
+  margin-right: 0.5rem;
+}
+
+select option[value="Needs Improvement"]::before {
+  content: "\f5c9"; /* Unicode for the Font Awesome icon you want to use (fa-face-sad-tear) */
+  margin-right: 0.5rem;
+}
