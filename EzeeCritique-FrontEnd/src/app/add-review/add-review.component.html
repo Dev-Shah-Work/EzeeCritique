@@ -1,59 +1,62 @@
-<div class=" min-h-screen"
-style="
-    background-image: url('../../assets/userBG.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-  ">
-  <div
-    class="signup flex flex-col justify-center items-center mx-auto"
-   
+<div class="signup flex flex-col justify-center items-center mx-auto">
+  <h1
+    mat-dialog-title
+    class="font-victormono py-8 underline text-3xl font-extrabold text-white"
   >
-    <h1 class="font-victormono py-8 underline text-xl font-extrabold text-white">Add your review here</h1>
-    <div class="flex justify-center items-center backdrop-blur-xl">
+    Add your review here
+  </h1>
+  <mat-dialog-content class="w-full">
+    
       <form
         action=""
-        #registerForm="ngForm"
-        
-        class="flex flex-col space-y-6 border-4 rounded-md border-black p-6 items-center justify-center"
+        #reviewForm="ngForm"
+        class="flex flex-col space-y-6 border-4 rounded-md border-black p-6 items-center justify-center "
       >
-        <input
-          type="email"
-          placeholder="Enter Email"
-          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
+        <select
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
           ngModel
-          name="username"
-        />
+          name="role"
+        >
+          <option value="" disabled>Choose Role</option>
+          <option value="user">{{ "user" | titlecase }}</option>
+          <option value="brand">{{ "brand" | titlecase }}</option>
+        </select>
+
         <input
           type="text"
-          placeholder="Enter Name"
-          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
+          placeholder="Enter Product Name"
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
           ngModel
-          name="name"
+          name="pname"
         />
-        <input
-          type="password"
-          placeholder="Enter Password"
-          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none"
+        <textarea
+          cols="20"
+          rows="5"
+          type="text"
+          placeholder="Enter Product Description"
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
           ngModel
-          name="password"
-        />
-
-        <select class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-3/4 " ngModel name="role">
-          <option value="" disabled>Choose Role</option>
-          <option value="user">{{'user'|titlecase}}</option>
-          <option value="brand">{{'brand'|titlecase}}</option>
+          name="description"
+        ></textarea>
+        <select
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
+          ngModel
+          name="rating"
+        >
+          <option value="" disabled>Rate us </option>
+          <option value="Very Happy">Very Happy<i class="fa fa-regular fa-face-laugh text-green-500"></i></option>
+          <option value="Satisfied">Satisfied<i class="fa fa-regular fa-face-smile text-yellow-300"></i></option>  
+          <option value="Moderate">Moderate<i class="fa fa-regular fa-face-meh text-orange-400"></i></option>  
+          <option value="Needs Improvement">Needs Improvement<i class="fa fa-regular fa-face-sad-tear text-red-400"></i></option>  
         </select>
 
         <button
           class="w-full py-2 px-5 rounded-md bg-gray-400 hover:bg-gray-500 text-white"
         >
-          Sign-Up
+        Add Product Review
         </button>
-        <button  class="text-blue-400">
-          Already an existing user? Do login by clicking here
-        </button>
+       
       </form>
-    </div>
-  </div>
   
+  </mat-dialog-content>
+</div>

@@ -27,16 +27,12 @@ export class UserEntryComponent {
   login(data: User): void {
     console.warn(data);
     this.user.authenticateUser(data).subscribe((val: any) => {
-      if(val)
-      {
+     
       localStorage.setItem('token', val.token);
       localStorage.setItem('role', val.role);
       this.router.navigate(['/user-page']);
-      }
-      else
-      {
-        this.authError = "Please enter correct email and password";
-      }
+
+    
     });
   }
   switchLogin() {

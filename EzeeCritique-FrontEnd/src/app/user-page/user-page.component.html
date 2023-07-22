@@ -19,13 +19,12 @@
     <ul
       class="flex justify-between space-x-6 font-victormono text-xl font-bold text-gray-200 cursor-pointer"
     >
-      <li routerLink="/add-review">Add-Review<i class="fa fa-solid fa-plus px-2 mb-1"></i></li>
-      <!-- <li mat-button (click)="openDialog()">User-Details<i class="fa fa-solid fa-circle-info px-2"></i></li> -->
+      <li (click)="openReviewDialog()">Add-Review<i class="fa fa-solid fa-plus px-2 mb-1"></i></li>
+      <li mat-button (click)="openDialog()" >User-Details<i class="fa fa-solid fa-circle-info px-2"></i></li>
       <li (click)="logout()">Logout<i class="fa fa-solid fa-right-from-bracket px-2"></i></li>
     </ul>
   </nav>
   <div class="min-h-[calc(100vh-151.31px)]">
-    <button mat-button (click)="openDialog()">Open dialog</button>
 
   </div>
   <footer
