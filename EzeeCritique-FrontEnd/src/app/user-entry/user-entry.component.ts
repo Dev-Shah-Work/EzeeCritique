@@ -10,9 +10,9 @@ import { UserService } from '../services/user.service';
 })
 export class UserEntryComponent {
   onLogin: boolean = false;
-  authError: string |undefined;
+  authError: string | undefined;
   role: string | undefined;
-  logInErrorMessage:string|undefined;
+  logInErrorMessage: string | undefined;
   constructor(private router: Router, private user: UserService) {}
   ngOnInit(): void {}
 
@@ -21,18 +21,20 @@ export class UserEntryComponent {
     console.warn(data.id);
     this.user.addUser(data).subscribe((val) => {
       console.log(val);
-      this.onLogin=true
+      this.onLogin = true;
     });
   }
   login(data: User): void {
     console.warn(data);
     this.user.authenticateUser(data).subscribe((val: any) => {
-     
       localStorage.setItem('token', val.token);
       localStorage.setItem('role', val.role);
-      this.router.navigate(['/user-page']);
-
-    
+      if (localStorage.getItem('role') === 'user') {
+        this.router.navigate(['/user-page']);
+      }
+      if (localStorage.getItem('role') === 'brand') {
+        this.router.navigate(['/brand-page']);
+      }
     });
   }
   switchLogin() {

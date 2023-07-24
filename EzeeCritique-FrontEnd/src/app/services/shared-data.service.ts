@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { UserService } from './user.service';
+import User from '../model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SharedDataService {
-
-  constructor() { }
-  private userDetailsSetSource = new Subject<boolean>();
-  userDetailsSet$ = this.userDetailsSetSource.asObservable();
-  private userDetailsSubject = new BehaviorSubject<any>(
-    JSON.parse(localStorage.getItem('userDetails') as string)
-  );
-  public userDetailsObservable = this.userDetailsSubject.asObservable();
+export class SharedDataService implements OnInit{
+  activeUser:User|undefined
+  constructor(private user:UserService ) {}
+  ngOnInit(): void {
+    this.user.getUserDetails().subscribe(val=>{
+      this.activeUser=val
+      console.warn(this.activeUser)
+    })
+  }
+ 
 }

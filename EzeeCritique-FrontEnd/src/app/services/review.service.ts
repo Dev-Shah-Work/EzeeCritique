@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import Review from '../model'
 
 @Injectable({
   providedIn: 'root',
@@ -7,13 +8,18 @@ import { Injectable } from '@angular/core';
 export class ReviewService {
   private baseURL = `http://localhost:8080/api/ezeecritique/review`;
   constructor(private http: HttpClient) {}
-  addReview(data:any) {
+  addReview(data:Review) {
     
     var token = localStorage.getItem('token');
-    this.http.post(this.baseURL + '/addReview', data, {
+    return this.http.post(this.baseURL + '/addReview', data, {
       headers: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'text/plain' // Set Accept header to receive plain text response
       },
+      responseType: 'text'
+        
+      
     });
   }
 }

@@ -15,11 +15,11 @@ import { AddReviewComponent } from '../add-review/add-review.component';
 
 export class UserPageComponent implements OnInit, OnDestroy {
   currentUser: any;
-  private pageRefreshed = false;
+  // private pageRefreshed = false;
   ngOnInit(): void {
-    if (!this.pageRefreshed) {
-      this.pageRefreshed = true;
-    }
+    // if (!this.pageRefreshed) {
+    //   this.pageRefreshed = true;
+    // }
     this.router.navigate(['/user-page']);
     this.getUserDetails();
   }

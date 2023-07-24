@@ -38,7 +38,7 @@ export class UserService implements OnInit {
   getUserDetails(): Observable<User> {
     var token = localStorage.getItem('token');
 
-    console.log(token);
+    // console.log(token);
 
     return this.http.get<User>(this.baseURL + '/userDetails', {
       headers: {

@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class UserDetailsComponent implements OnInit, OnDestroy {
   currentUser: any;
   ngOnInit(): void {
-    this.router.navigate(['/user-page']);
     this.user.getUserDetails().subscribe((val) => {
       this.currentUser = val;
     });
