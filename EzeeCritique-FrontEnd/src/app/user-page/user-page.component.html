@@ -19,13 +19,93 @@
     <ul
       class="flex justify-between space-x-6 font-victormono text-xl font-bold text-gray-200 cursor-pointer"
     >
-      <li (click)="openReviewDialog()">Add-Review<i class="fa fa-solid fa-plus px-2 mb-1"></i></li>
-      <li mat-button (click)="openDialog()" >User-Details<i class="fa fa-solid fa-circle-info px-2"></i></li>
-      <li (click)="logout()">Logout<i class="fa fa-solid fa-right-from-bracket px-2"></i></li>
+      <li (click)="openReviewDialog()">
+        Add-Review<i class="fa fa-solid fa-plus px-2 mb-1"></i>
+      </li>
+      <li mat-button (click)="openDialog()">
+        User-Details<i class="fa fa-solid fa-circle-info px-2"></i>
+      </li>
+      <li (click)="logout()">
+        Logout<i class="fa fa-solid fa-right-from-bracket px-2"></i>
+      </li>
     </ul>
   </nav>
   <div class="min-h-[calc(100vh-151.31px)]">
+    <div class="card">
+      <p-carousel
+        [value]="userReviews"
+        [numVisible]="3"
+        [numScroll]="3"
+        [circular]="false"
+      >
+        <ng-template let-review pTemplate="item">
+          <div
+            class="border-1 surface-border border-round m-2 text-center py-5 px-3 "
+          >
+            <div class="card flex justify-content-center ">
+              <p-card
+                header="Brand:{{ review.bname }}"
+                subheader="Product:{{ review.pname }}"
+                [style]="{ width: '360px' }"
+                class="font-victormono"
+              >
+                <ng-template pTemplate="header">
+                  <img
+                    alt="Card"
+                    src="https://primefaces.org/cdn/primeng/images/usercard.png"
+                  />
+                </ng-template>
+                <p>
+                  {{ review.description }}
+                </p>
+                <div class="font-victormono border rounded-md text-gray-500 mt-3 p-3 bg-gray-200">
+                <ng-container [ngSwitch]="review.rating" >
+                  <span *ngSwitchCase="'Very Happy'"
+                    >Rating:"Very Happy" <br>
+                    <i
+                      class="fa fa-regular fa-face-laugh text-green-500 text-4xl p-3"
+                    ></i
+                  ></span>
+                  <span *ngSwitchCase="'Satisfied'"
+                    >Rating:"Satisfied"
+                    <br><i
+                      class="fa fa-regular fa-face-smile text-yellow-300 text-4xl p-3"
+                    ></i
+                  ></span>
+                  <span *ngSwitchCase="'Moderate'"
+                    >Rating:"Moderate"
+                    <br>
+                    <i
+                      class="fa fa-regular fa-face-meh text-orange-400 text-4xl p-3"
+                    ></i
+                  ></span>
+                  <span *ngSwitchCase="'Needs Improvement'"
+                    >Rating:"Needs Improvement"
+                    <br><i
+                      class="fa fa-regular fa-face-sad-tear text-red-400 text-4xl p-3"
+                    ></i
+                  ></span>
+                </ng-container>
+              </div>
 
+                <ng-template pTemplate="footer">
+                  <p-button label="Update" icon="pi pi-check"
+                    ><i class="fa-solid fa-pen"></i
+                  ></p-button>
+                  <p-button
+                    label="Delete"
+                    icon="pi pi-times"
+                    styleClass="p-button-secondary"
+                    [style]="{ 'margin-left': '.5em' }"
+                    ><i class="fa-solid fa-trash"></i
+                  ></p-button>
+                </ng-template>
+              </p-card>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
   </div>
   <footer
     class="flex flex-row justify-center items-center bg-[#759aa8] w-full px-4 backdrop-blur py-4"

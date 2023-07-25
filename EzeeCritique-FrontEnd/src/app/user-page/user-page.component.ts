@@ -5,28 +5,27 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { UserDetailsComponent } from '../user-details/user-details.component';
 import { AddReviewComponent } from '../add-review/add-review.component';
+import Review from '../model';
+import { ReviewService } from '../services/review.service';
 
 @Component({
   selector: 'app-user-page',
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.css'],
 })
-
-
 export class UserPageComponent implements OnInit, OnDestroy {
   currentUser: any;
-  // private pageRefreshed = false;
+  userReviews: any;
   ngOnInit(): void {
-    // if (!this.pageRefreshed) {
-    //   this.pageRefreshed = true;
-    // }
     this.router.navigate(['/user-page']);
     this.getUserDetails();
+    //this.getReview();
   }
   constructor(
     private router: Router,
     private user: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private review: ReviewService
   ) {}
   logout() {
     localStorage.removeItem('token');
@@ -45,9 +44,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
     });
   }
   openReviewDialog() {
-
     const dialogRef = this.dialog.open(AddReviewComponent, {
-      width:'600px'
+      width: '600px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -58,8 +56,20 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.user.getUserDetails().subscribe((val) => {
       this.currentUser = val;
       console.log(this.currentUser);
-    
+      this.getReview();
     });
+  }
+  getReview() {
+    let val = {
+      uid: this.currentUser.id.toString(),
+    };
+    this.review.getReviewforUser(val).subscribe((data) => {
+      if (data) {
+        this.userReviews = data as Review[];
+        console.log(this.userReviews);
+      }
+    });
+    //console.log(this.userReviews);
   }
   ngOnDestroy(): void {
     this.currentUser = null;

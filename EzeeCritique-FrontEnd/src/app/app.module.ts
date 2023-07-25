@@ -15,20 +15,23 @@ import { InitialPageComponent } from './initial-page/initial-page.component';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-
+import { MatButtonModule } from '@angular/material/button';
+import { CarouselModule } from 'primeng/carousel';
+import { ButtonModule } from 'primeng/button';
+import { TagModule } from 'primeng/tag';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserEntryComponent,
-   
+
     BrandPageComponent,
     AddReviewComponent,
     UpdateReviewComponent,
     UserDetailsComponent,
     InitialPageComponent,
-    UserPageComponent
+    UserPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,8 +39,14 @@ import {MatButtonModule} from '@angular/material/button';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+
     MatDialogModule,
-    MatButtonModule, 
+    MatButtonModule,
+
+    CarouselModule,
+    ButtonModule,
+    TagModule,
+    CardModule,
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
