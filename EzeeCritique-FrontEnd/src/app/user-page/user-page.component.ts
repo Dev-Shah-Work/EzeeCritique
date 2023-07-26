@@ -7,6 +7,8 @@ import { UserDetailsComponent } from '../user-details/user-details.component';
 import { AddReviewComponent } from '../add-review/add-review.component';
 import Review from '../model';
 import { ReviewService } from '../services/review.service';
+import { UpdateReviewComponent } from '../update-review/update-review.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-page',
@@ -52,6 +54,16 @@ export class UserPageComponent implements OnInit, OnDestroy {
       console.log(`Dialog result: ${result}`);
     });
   }
+  openUpdateDialog(review: Review) {
+    const dialogRef = this.dialog.open(UpdateReviewComponent, {
+      width: '600px',
+      data: review,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
   getUserDetails() {
     this.user.getUserDetails().subscribe((val) => {
       this.currentUser = val;
@@ -70,6 +82,17 @@ export class UserPageComponent implements OnInit, OnDestroy {
       }
     });
     //console.log(this.userReviews);
+  }
+  deleteReview(id: number) {
+    this.review.deleteReview(id).subscribe((val) => {
+      console.log(val);
+      this.getReview();
+    },
+    (error: HttpErrorResponse) => {
+      if(error.error.text === 'Review was deleted successfully'){
+        this.getReview();
+      }
+    });
   }
   ngOnDestroy(): void {
     this.currentUser = null;

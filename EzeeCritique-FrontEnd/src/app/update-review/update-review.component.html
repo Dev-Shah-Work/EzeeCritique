@@ -1,1 +1,71 @@
-<p>update-review works!</p>
+<div class="signup flex flex-col justify-center items-center mx-auto">
+    <h1
+      mat-dialog-title
+      class="font-victormono py-8 underline text-3xl font-extrabold text-white"
+    >
+      Update your review here
+    </h1>
+    <mat-dialog-content class="w-full">
+      <form
+        action=""
+        #reviewForm="ngForm"
+        (ngSubmit)="updateReviewClicked(reviewForm.value)"
+        class="flex flex-col space-y-6 border-4 rounded-md border-black p-6 items-center justify-center bg-[#759aa8]"
+      >
+        <select
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
+          ngModel
+          name="bname"
+        >
+        <option value="" disabled>Choose Brand</option>
+          <ng-container *ngFor="let brand of brandList">
+            <option class="text-black" value={{brand.name}}  ngModel="{{reviewData.bname}}" >{{ brand.name| titlecase }}</option>
+          </ng-container>
+        </select>
+  
+        <input
+          type="text"
+          placeholder="Enter Product Name"
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
+          ngModel="{{reviewData.pname}}"
+          name="pname"
+        />
+        <textarea
+          cols="20"
+          rows="5"
+          type="text"
+          placeholder="Enter Product Description"
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
+          ngModel="{{reviewData.description}}"
+          name="description"
+        ></textarea>
+        <select
+          class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
+          ngModel="{{reviewData.rating}}"
+          name="rating"
+        >
+          <option value="" disabled>Rate us</option>
+          <option value="Very Happy">
+            😊 Very Happy
+          </option>
+          <option value="Satisfied">
+            🙂 Satisfied
+          </option>
+          <option value="Moderate">
+            😐 Moderate
+          </option>
+          <option value="Needs Improvement">
+            😕 Needs Improvement
+          </option>
+        </select>
+  
+        <button
+          class="w-full py-2 px-5 rounded-md bg-blue-500 hover:bg-blue-300 text-white"
+          
+        >
+          Update Product Review
+        </button>
+      </form>
+    </mat-dialog-content>
+  </div>
+  

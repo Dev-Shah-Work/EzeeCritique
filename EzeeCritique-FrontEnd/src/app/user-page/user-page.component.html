@@ -42,12 +42,16 @@
           <div
             class="border-1 surface-border border-round m-2 text-center py-5 px-3 "
           >
-            <div class="card flex justify-content-center ">
+            <div class="card flex justify-content-center w-[360px] font-victormono widthCard">
               <p-card
-                header="Brand:{{ review.bname }}"
-                subheader="Product:{{ review.pname }}"
-                [style]="{ width: '360px' }"
-                class="font-victormono"
+                header="Brand: {{ review.bname |titlecase}}"
+                subheader="Product: {{ review.pname |titlecase}}"
+                [style]="{
+                  width: '360px',
+                  height: '577.89px'
+                  
+                }"
+                class="font-victormono widthCard"
               >
                 <ng-template pTemplate="header">
                   <img
@@ -55,7 +59,7 @@
                     src="https://primefaces.org/cdn/primeng/images/usercard.png"
                   />
                 </ng-template>
-                <p>
+                <p class="overflow-y-auto h-[60px] text-wrap break-all flex justify-center items-center pt-4">
                   {{ review.description }}
                 </p>
                 <div class="font-victormono border rounded-md text-gray-500 mt-3 p-3 bg-gray-200">
@@ -69,7 +73,7 @@
                   <span *ngSwitchCase="'Satisfied'"
                     >Rating:"Satisfied"
                     <br><i
-                      class="fa fa-regular fa-face-smile text-yellow-300 text-4xl p-3"
+                      class="fa fa-regular fa-face-smile text-yellow-500 text-4xl p-3"
                     ></i
                   ></span>
                   <span *ngSwitchCase="'Moderate'"
@@ -89,7 +93,7 @@
               </div>
 
                 <ng-template pTemplate="footer">
-                  <p-button label="Update" icon="pi pi-check"
+                  <p-button label="Update" icon="pi pi-check" (onClick)="openUpdateDialog(review)"
                     ><i class="fa-solid fa-pen"></i
                   ></p-button>
                   <p-button
@@ -97,6 +101,7 @@
                     icon="pi pi-times"
                     styleClass="p-button-secondary"
                     [style]="{ 'margin-left': '.5em' }"
+                    (onClick)="deleteReview(review.id)"
                     ><i class="fa-solid fa-trash"></i
                   ></p-button>
                 </ng-template>

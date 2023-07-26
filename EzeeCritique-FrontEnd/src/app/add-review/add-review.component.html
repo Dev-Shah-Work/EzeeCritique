@@ -16,10 +16,13 @@
         class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
         ngModel
         name="bname"
+        required
       >
-      <option value="" disabled>Choose Brand</option>
+        <option value="" disabled>Choose Brand</option>
         <ng-container *ngFor="let brand of brandList">
-          <option class="text-black" value={{brand.name}} (change)="logger()" ngModel >{{ brand.name| titlecase }}</option>
+          <option class="text-black" value="{{ brand.name }}" ngModel>
+            {{ brand.name | titlecase }}
+          </option>
         </ng-container>
       </select>
 
@@ -29,6 +32,7 @@
         class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
         ngModel
         name="pname"
+        required
       />
       <textarea
         cols="20"
@@ -37,31 +41,24 @@
         placeholder="Enter Product Description"
         class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
         ngModel
+        required
         name="description"
       ></textarea>
       <select
         class="p-2 border-2 border-gray-500 rounded-md focus:outline-none w-full"
         ngModel
         name="rating"
+        required
       >
         <option value="" disabled>Rate us</option>
-        <option value="Very Happy">
-          😊 Very Happy
-        </option>
-        <option value="Satisfied">
-          🙂 Satisfied
-        </option>
-        <option value="Moderate">
-          😐 Moderate
-        </option>
-        <option value="Needs Improvement">
-          😕 Needs Improvement
-        </option>
+        <option value="Very Happy">😊 Very Happy</option>
+        <option value="Satisfied">🙂 Satisfied</option>
+        <option value="Moderate">😐 Moderate</option>
+        <option value="Needs Improvement">😕 Needs Improvement</option>
       </select>
 
       <button
-        class="w-full py-2 px-5 rounded-md bg-blue-500 hover:bg-blue-300 text-white"
-        
+        class="w-full py-2 px-5 rounded-md bg-blue-500 hover:bg-blue-300 text-white" [disabled]="reviewForm.invalid"
       >
         Add Product Review
       </button>

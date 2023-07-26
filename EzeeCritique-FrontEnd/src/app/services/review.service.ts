@@ -21,10 +21,26 @@ export class ReviewService {
   }
   getReviewforUser(data: any) {
     var token = localStorage.getItem('token');
-    return this.http.post(this.baseURL + '/getReviewByUid', data,{
-      headers:{
-        Authorization:`Bearer ${token}`
-      }
+    return this.http.post(this.baseURL + '/getReviewByUid', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  deleteReview(id: number) {
+    var token = localStorage.getItem('token');
+    return this.http.delete(this.baseURL + `/deleteReview/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  updateReview(data: Review) {
+    var token = localStorage.getItem('token');
+    return this.http.put(this.baseURL + '/updateReview', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 }

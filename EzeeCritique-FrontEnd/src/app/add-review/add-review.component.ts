@@ -27,9 +27,7 @@ export class AddReviewComponent implements OnInit {
     });
   }
 
-  logger() {
-    console.log(this.brandName);
-  }
+ 
   addReviewClicked(data: Review) {
     console.log(data);
 
@@ -39,11 +37,14 @@ export class AddReviewComponent implements OnInit {
       this.review.addReview(data).subscribe(
         (res: string) => {
           console.log(res);
+          window.location.reload();
         },
         (error: HttpErrorResponse) => {
           console.error(error);
         }
       );
     });
-  }
+    // window.location.reload();
+
+  }      // //Xchange this if time permits
 }
