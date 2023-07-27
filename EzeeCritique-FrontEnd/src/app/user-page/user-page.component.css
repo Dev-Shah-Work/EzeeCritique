@@ -6,4 +6,12 @@
   font-weight: 700;
   color: black;
   font-family: "Victor Mono", monospace;
+  background-color: #FFEFFF;
+}
+
+.box-shadow{
+  -webkit-box-shadow: -4px 5px 7px 1px rgba(0,0,0,0.79);
+-moz-box-shadow: -4px 5px 7px 1px rgba(0,0,0,0.79);
+box-shadow: -4px 5px 7px 1px rgba(0,0,0,0.79);
+
 }

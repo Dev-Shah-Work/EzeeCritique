@@ -13,4 +13,5 @@ export default interface Review {
   uid: number;
   description: string;
   rating: string;
+  uname:string
 }

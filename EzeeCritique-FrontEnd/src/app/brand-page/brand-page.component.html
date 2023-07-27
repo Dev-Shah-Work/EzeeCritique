@@ -1,0 +1,104 @@
+<div
+  class="flex flex-col min-h-screen"
+  style="
+    background-image: url('../../assets/UserBG1.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+  "
+>
+  <nav
+    class="flex flex-row justify-between items-center bg-[#000080] w-full px-4 backdrop-blur"
+  >
+    <img
+      routerLink="/"
+      src="../../assets/LogoBG1.png"
+      
+      alt="Logo image "
+      class="w-64 h-auto py-2 cursor-pointer rounded-md"
+    />
+    <ul
+      class="flex justify-between space-x-6 font-victormono text-xl font-bold text-gray-200 cursor-pointer"
+    >
+      <li mat-button (click)="openDialog()" >Brand-Details<i class="fa fa-solid fa-circle-info px-2"></i></li>
+      <li (click)="logout()">Logout<i class="fa fa-solid fa-right-from-bracket px-2"></i></li>
+    </ul>
+  </nav>
+  <div class="min-h-[calc(100vh-151.31px)]">
+    <div class="card mx-[156px]">
+        <p-carousel
+          [value]="brandReviews"
+          [numVisible]="3"
+          [numScroll]="3"
+          [circular]="false"
+        >
+          <ng-template let-review pTemplate="item">
+            <div
+              class="border-1 surface-border border-round m-2 text-center py-5 px-3 "
+            >
+              <div class="card flex justify-content-center w-[360px] font-victormono widthCard">
+                <p-card
+                  header="Username: {{ review.uname|titlecase}}"
+                  subheader="Product: {{ review.pname |titlecase}}"
+                  [style]="{
+                    width: '360px',
+                    height: '577.89px'
+                    
+                  }"
+                  class="font-victormono widthCard"
+                >
+                  <ng-template pTemplate="header">
+                    <img
+                      alt="Card"
+                      src="https://source.unsplash.com/random/360x216/?{{review.pname}}"
+                    />
+                  </ng-template>
+                  <p class="overflow-y-auto h-[60px] text-wrap break-all flex justify-center items-center pt-4">
+                    {{ review.description }}
+                  </p>
+                  <div class="font-victormono border rounded-md text-gray-500 mt-3 p-3 bg-gray-200">
+                  <ng-container [ngSwitch]="review.rating" >
+                    <span *ngSwitchCase="'Very Happy'"
+                      >Rating:"Very Happy" <br>
+                      <i
+                        class="fa fa-regular fa-face-laugh text-green-500 text-4xl p-3"
+                      ></i
+                    ></span>
+                    <span *ngSwitchCase="'Satisfied'"
+                      >Rating:"Satisfied"
+                      <br><i
+                        class="fa fa-regular fa-face-smile text-yellow-500 text-4xl p-3"
+                      ></i
+                    ></span>
+                    <span *ngSwitchCase="'Moderate'"
+                      >Rating:"Moderate"
+                      <br>
+                      <i
+                        class="fa fa-regular fa-face-meh text-orange-400 text-4xl p-3"
+                      ></i
+                    ></span>
+                    <span *ngSwitchCase="'Needs Improvement'"
+                      >Rating:"Needs Improvement"
+                      <br><i
+                        class="fa fa-regular fa-face-sad-tear text-red-400 text-4xl p-3"
+                      ></i
+                    ></span>
+                  </ng-container>
+                </div>
+  
+                  <ng-template pTemplate="footer">
+                   
+                  </ng-template>
+                </p-card>
+              </div>
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+  </div>
+  <footer
+    class="flex flex-row justify-center items-center bg-[#000080] w-full px-4 backdrop-blur py-4"
+  >
+    <p class="font-victormono text-white">©Copyright Reserved</p>
+  </footer>
+</div>

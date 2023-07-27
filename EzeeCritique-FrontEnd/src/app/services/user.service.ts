@@ -54,4 +54,7 @@ export class UserService implements OnInit {
       },
     });
   }
+  // getUserById(data: any): Observable<User> {
+  //   return this.http.post<User>(this.baseURL + '/getUserId', data);
+  // }
 }

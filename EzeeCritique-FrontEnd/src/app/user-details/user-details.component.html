@@ -4,7 +4,7 @@
 <mat-dialog-content class="mat-typography">
   <div class="border-dotted border-gray-700 text-2xl text-black" style="font-family: Ubuntu;">
     <p>Username : {{ currentUser?.username }}</p>
-    <p>Name : {{ currentUser?.name }}</p>
+    <p>Name : {{ currentUser?.name |titlecase}}</p>
     <p>Role : {{ currentUser?.role }}</p>
   </div>
 </mat-dialog-content>

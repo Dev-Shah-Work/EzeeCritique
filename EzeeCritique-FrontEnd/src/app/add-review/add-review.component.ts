@@ -33,7 +33,8 @@ export class AddReviewComponent implements OnInit {
 
     this.user.getUserDetails().subscribe((val) => {
       data.uid = val.id;
-      console.log(val.id);
+      data.uname=val.name
+      // console.log(val.id);
       this.review.addReview(data).subscribe(
         (res: string) => {
           console.log(res);

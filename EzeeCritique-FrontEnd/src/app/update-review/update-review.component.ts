@@ -15,6 +15,7 @@ export class UpdateReviewComponent implements OnInit {
   brandList: User[] | undefined;
   currentUser: any;
   uid: number | any;
+  uname: string | any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public reviewData: Review,
@@ -33,31 +34,35 @@ export class UpdateReviewComponent implements OnInit {
     // this.getUserDetails();
     console.log('Clicked Update');
     if (data) {
+      // console.log("inside if")
       data.id = this.reviewData.id;
       data.uid = this.uid;
+      data.uname = this.uname;  
     }
-    this.review.updateReview(data).subscribe((val) => {
-      console.log(val);
-      window.location.reload();
-    },
-    (error: HttpErrorResponse) => {
-      if(error.error.text === 'Your review was updated successfully'){
+    console.log(data);
+
+    this.review.updateReview(data).subscribe(
+      (val) => {
+        console.log(val);
         window.location.reload();
+      },
+      (error: HttpErrorResponse) => {
+        if (error.error.text === 'Your review was updated successfully') {
+          window.location.reload();
+        }
       }
-    });
+    );
   }
   getUserDetails() {
-    this.user.getUserDetails().subscribe({next:(val) => {
-      this.currentUser = val;
-      this.uid = this.currentUser.id;
-      // console.log(this.currentUser);
-    },
-  error:(err)=>{
-
-  },
-  complete:()=> {
-
-  }
-});
+    this.user.getUserDetails().subscribe({
+      next: (val) => {
+        this.currentUser = val;
+        this.uid = this.currentUser.id;
+        this.uname = this.currentUser.name;
+        // console.log(this.currentUser);
+      },
+      error: (err) => {},
+      complete: () => {},
+    });
   }
 }

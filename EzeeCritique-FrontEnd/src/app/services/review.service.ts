@@ -43,4 +43,12 @@ export class ReviewService {
       },
     });
   }
+  getReviewforBrand(data: any) {
+    var token = localStorage.getItem('token');
+    return this.http.post(this.baseURL + '/getReviewByBname', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
