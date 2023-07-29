@@ -20,6 +20,10 @@ public interface UserRepo extends JpaRepository<User,Integer> {
 
     @Query("SELECT u FROM User u WHERE u.id=:id")
     User getById(@Param("id")Integer id);
+    @Query("SELECT u FROM User u WHERE u.role='brand' OR u.role='user' " )
+    List<User> getUsers();
+
+
 
 
 

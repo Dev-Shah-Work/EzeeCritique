@@ -17,7 +17,6 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
-
 public class UserControllerImpl implements UserControl {
     private final UserService userService;
     @Override
@@ -60,4 +59,40 @@ public class UserControllerImpl implements UserControl {
         }
         return new ResponseEntity<>(new User(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<User> getUserId(Map<String, String> requestMap) {
+        try{
+            return userService.getUserById(requestMap);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new User(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<List<User>> getAllUsers() {
+        try
+        {
+            return userService.getAllUsers();
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteUser(Map<String, String> requestmap) {
+        try{
+           return userService.deleteUser(requestmap);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>("Something went wrong in controller imlementation",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 }

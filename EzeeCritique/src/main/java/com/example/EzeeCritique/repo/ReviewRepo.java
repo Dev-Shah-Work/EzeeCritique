@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewRepo extends JpaRepository<Review,Integer> {
 
@@ -19,6 +20,6 @@ public interface ReviewRepo extends JpaRepository<Review,Integer> {
     List<Review> findByUid(Integer id);
 
     List<Review> findByBname(String bname);
-    @Query(value = "SELECT r FROM Review r WHERE r.id=:id",nativeQuery = true)
-    Review findReviewById(@Param("id")Integer id);
+//    @Query(value = "SELECT r FROM Review r WHERE r.id=:id",nativeQuery = true)
+//    Optional<Review> findReviewById(@Param("id")Integer id);
 }

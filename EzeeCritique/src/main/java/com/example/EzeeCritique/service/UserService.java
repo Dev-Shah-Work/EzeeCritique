@@ -17,5 +17,11 @@ public interface UserService {
     ResponseEntity<List<User>> getBrands();
 
     ResponseEntity<User> getUserDetails();
+
+    ResponseEntity<User> getUserById(Map<String, String> requestMap);
+
+    ResponseEntity<List<User>> getAllUsers();
+
+    ResponseEntity<String> deleteUser(Map<String, String> requestmap);
 }
 

@@ -21,7 +21,7 @@ public class Review {
     private String bname;
     private String pname;
     private Integer uid;
-    @Lob
+    private String uname;
     private String description;
     private String rating;
 

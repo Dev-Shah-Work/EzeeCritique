@@ -4,6 +4,7 @@ import com.example.EzeeCritique.error.CritiqueUtils;
 import com.example.EzeeCritique.jwt.CustomerUserDetailsService;
 import com.example.EzeeCritique.jwt.JwtFilter;
 import com.example.EzeeCritique.jwt.JwtUtil;
+import com.example.EzeeCritique.model.Review;
 import com.example.EzeeCritique.model.User;
 import com.example.EzeeCritique.repo.ReviewRepo;
 import com.example.EzeeCritique.repo.UserRepo;
@@ -21,10 +22,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j//hota hai
 @Service
@@ -90,7 +88,7 @@ public class UserServiceImpl implements UserService {
     }
     private User getUserFromMap(Map<String, String> requestMap) {
         User user= new User();
-        user.setName(requestMap.get("name"));
+        user.setName(requestMap.get("name").toLowerCase());
         user.setUsername(requestMap.get("username"));
 //        user.setPassword(requestMap.get("password"));
         user.setPassword(passwordEncoder.encode(requestMap.get("password")));
@@ -145,18 +143,64 @@ public class UserServiceImpl implements UserService {
         }
         return new ResponseEntity<>(new User(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @Override
+    public ResponseEntity<User> getUserById(Map<String, String> requestMap) {
+        try
+        {
+            if(requestMap.containsKey("uid") && !requestMap.isEmpty())
+            {
+              User user = userRepo.getById(Integer.parseInt(requestMap.get("uid")));
+
+              return new ResponseEntity<>(user,HttpStatus.OK);
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new User(),HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-//    @Override
-//    public ResponseEntity<List<UserWrapper>> getAllUser() {
-//        try{
-//            if(jwtFilter.isBrand()){
-//                return new ResponseEntity<>(userRepo.getAllUser(),HttpStatus.OK);
-//            }else
-//                return new ResponseEntity<>(userRepo.getByUsername(jwtFilter.getCurrentUser()),HttpStatus.OK);
-//        }catch(Exception ex){
-//            ex.printStackTrace();
-//        }
-//        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @Override
+    public ResponseEntity<List<User>> getAllUsers() {
+
+        try
+        {
+            if(jwtFilter.isAdmin()){
+                List<User> allUsers = userRepo.getUsers();
+                return new ResponseEntity<>(allUsers, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.UNAUTHORIZED);
+        }
+        catch(Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseEntity<String> deleteUser(Map<String, String> requestmap) {
+        try{
+            if(jwtFilter.isAdmin()){
+
+                Optional<User> user=userRepo.findById(Integer.parseInt(requestmap.get("id")));
+                if(user.isPresent()){
+                    userRepo.deleteById(Integer.parseInt(requestmap.get("id")));
+                   return CritiqueUtils.getResponseEntity("User was deleted successfully",HttpStatus.OK);
+                }else{
+                    return CritiqueUtils.getResponseEntity("User with does not exist",HttpStatus.NOT_FOUND);
+                }
+            }else{
+                return CritiqueUtils.getResponseEntity("You are not authorized for this action",HttpStatus.UNAUTHORIZED);
+
+            }
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return CritiqueUtils.getResponseEntity("Your entry was not deleted",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+}
+
+//
 

@@ -1,5 +1,6 @@
 package com.example.EzeeCritique.serviceImpl;
 
+import com.example.EzeeCritique.error.CritiqueUtils;
 import com.example.EzeeCritique.repo.ReviewRepo;
 import com.example.EzeeCritique.service.ReviewService;
 import com.example.EzeeCritique.wrapper.ReviewWrapper;
@@ -30,15 +31,15 @@ public class ReviewServiceImpl implements ReviewService {
             if(jwtFilter.isUser()){
                 if(this.validateReviewMap(requestMap,false)){
                     reviewRepo.save(this.getReviewFromMap(requestMap,false));
-                    return new ResponseEntity<>("Review was added successfully",HttpStatus.OK);
+                    return CritiqueUtils.getResponseEntity("Review was added successfully",HttpStatus.OK);
                 }
-                return new ResponseEntity<>("Invalid data format",HttpStatus.BAD_REQUEST);
+                return CritiqueUtils.getResponseEntity("Invalid data format",HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>("Unauthorized Access",HttpStatus.UNAUTHORIZED);
+            return CritiqueUtils.getResponseEntity("Unauthorized Access",HttpStatus.UNAUTHORIZED);
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return new ResponseEntity<>("Something went wrong in review Implementation", HttpStatus.INTERNAL_SERVER_ERROR);
+        return CritiqueUtils.getResponseEntity("Something went wrong in review Implementation", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Override
@@ -78,11 +79,23 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public ResponseEntity<String> updateReviews(Map<String, String> requestMap) {
         try{
-
+            if(jwtFilter.isUser()){
+                if(validateReviewMap(requestMap,true)){
+                    Optional<Review> reviewById=reviewRepo.findById(Integer.parseInt(requestMap.get("id")));
+                    if(reviewById.isPresent()){
+                        Review reviewFromMap=getReviewFromMap(requestMap,true);
+                        reviewRepo.save(reviewFromMap);
+                        return CritiqueUtils.getResponseEntity("Your review was updated successfully",HttpStatus.OK);
+                    }
+                    return CritiqueUtils.getResponseEntity("Review with given id does not exist",HttpStatus.BAD_REQUEST);
+                }
+                return CritiqueUtils.getResponseEntity("Invalid data format",HttpStatus.BAD_REQUEST);
+            }
+            return CritiqueUtils.getResponseEntity("Unauthorized Access",HttpStatus.UNAUTHORIZED);
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return new ResponseEntity<>("Something went wrong in review Implementation", HttpStatus.INTERNAL_SERVER_ERROR);
+        return CritiqueUtils.getResponseEntity("Something went wrong in review Implementation", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -93,17 +106,17 @@ public class ReviewServiceImpl implements ReviewService {
                 Optional<Review> review=reviewRepo.findById(id);
                 if(review.isPresent()){
                     reviewRepo.deleteById(id);
-                    return new ResponseEntity<>("Review was deleted successfully",HttpStatus.OK);
+                    return CritiqueUtils.getResponseEntity("Review was deleted successfully",HttpStatus.OK);
                 }else{
-                    return new ResponseEntity<>("Review with id:"+id+"does not exist",HttpStatus.NOT_FOUND);
+                    return CritiqueUtils.getResponseEntity("Review with id:"+id+"does not exist",HttpStatus.NOT_FOUND);
                 }
             }else{
-                return new ResponseEntity<>("You are not authorized for this action",HttpStatus.UNAUTHORIZED);
+                return CritiqueUtils.getResponseEntity("You are not authorized for this action",HttpStatus.UNAUTHORIZED);
             }
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        return new ResponseEntity<>("Something went wrong in review Implementation", HttpStatus.INTERNAL_SERVER_ERROR);
+        return CritiqueUtils.getResponseEntity("Something went wrong in review Implementation", HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
     private Review getReviewFromMap(Map<String, String> requestMap, boolean isAdd) {
@@ -114,17 +127,28 @@ public class ReviewServiceImpl implements ReviewService {
         review.setUid(Integer.parseInt(requestMap.get("uid")));
         review.setDescription(requestMap.get("description"));
         review.setRating(requestMap.get("rating"));
+        review.setUname(requestMap.get("uname"));
+        if(isAdd){
+            review.setId(Integer.parseInt(requestMap.get("id")));
+        }
         return review;
 
     }
 
     private boolean validateReviewMap(Map<String,String> requestMap,boolean validateId){
         if(requestMap.containsKey("pname")
+                && requestMap.containsKey("uname")
             && requestMap.containsKey("bname")
             && requestMap.containsKey("description")
             && requestMap.containsKey("uid")
-                && requestMap.containsKey("rating"))
-            return true;
+                && requestMap.containsKey("rating")){
+            if(validateId){
+                if(requestMap.containsKey("id")) return true;
+                return false;
+            }
+            return !validateId;
+        }
+
         return false;
     }
 }

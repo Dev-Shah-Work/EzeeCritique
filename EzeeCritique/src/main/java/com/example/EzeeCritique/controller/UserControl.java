@@ -21,10 +21,18 @@ public interface UserControl {
     @GetMapping("/getBrands")
     public ResponseEntity<List<User>> getBrands();
 
+    @CrossOrigin()
     @GetMapping("/userDetails")
     public ResponseEntity<User> getUserDetails();
 
+    @PostMapping("/getUserId")
+    public ResponseEntity<User> getUserId(@RequestBody Map<String,String> requestMap);
 
+   @GetMapping("/getAllUsers")
+    public ResponseEntity<List<User>> getAllUsers();
+
+   @PostMapping("/deleteUser")
+    public ResponseEntity<String> deleteUser(@RequestBody Map<String,String> requestmap);
 
 
 

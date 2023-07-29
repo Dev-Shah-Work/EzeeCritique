@@ -21,7 +21,7 @@ public interface ReviewControl {
     public ResponseEntity<List<Review>> getReviewByBname(@RequestBody Map<String,String> requestMap);
 
 
-    @PostMapping("/updateReview")
+    @PutMapping ("/updateReview")
     public ResponseEntity<String> updateReviews(@RequestBody Map<String,String> requestMap);
 
     @DeleteMapping("/deleteReview/{id}")

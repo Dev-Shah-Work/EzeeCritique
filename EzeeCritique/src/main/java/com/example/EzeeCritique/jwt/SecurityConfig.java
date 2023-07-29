@@ -41,8 +41,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity)throws Exception{
         httpSecurity.csrf().disable()
+                .cors().and()
                 .authorizeRequests()
-                .requestMatchers("api/ezeecritique/user/auth/**")
+                .requestMatchers("api/ezeecritique/user/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
@@ -54,4 +55,13 @@ public class SecurityConfig {
         httpSecurity.addFilterBefore(jwtFilter(),UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
+
+
+
+
+
+
+
+
+
 }
