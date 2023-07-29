@@ -45,10 +45,12 @@ export class UpdateReviewComponent implements OnInit {
       (val) => {
         console.log(val);
         window.location.reload();
+        // this.ngOnInit()
       },
       (error: HttpErrorResponse) => {
         if (error.error.text === 'Your review was updated successfully') {
-          window.location.reload();
+          // window.location.reload();
+
         }
       }
     );

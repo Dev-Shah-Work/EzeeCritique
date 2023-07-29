@@ -42,6 +42,10 @@ export class UserEntryComponent {
       if (localStorage.getItem('role') === 'brand') {
         this.router.navigate(['/brand-page']);
       }
+      if(localStorage.getItem('role')==='admin')
+      {
+        this.router.navigate(['/admin-page']);
+      }
     });
   }
   switchLogin() {

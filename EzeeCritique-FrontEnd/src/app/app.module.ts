@@ -20,6 +20,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { CardModule } from 'primeng/card';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { CardModule } from 'primeng/card';
     UserDetailsComponent,
     InitialPageComponent,
     UserPageComponent,
+    AdminPageComponent,
   ],
   imports: [
     BrowserModule,

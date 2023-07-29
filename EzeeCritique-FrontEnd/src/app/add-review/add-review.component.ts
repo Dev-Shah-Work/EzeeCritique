@@ -45,7 +45,7 @@ export class AddReviewComponent implements OnInit {
         }
       );
     });
-    // window.location.reload();
+    
 
-  }      // //Xchange this if time permits
+  }     
 }

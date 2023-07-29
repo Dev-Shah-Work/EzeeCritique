@@ -1,0 +1,66 @@
+<div
+  class="flex flex-col min-h-screen"
+  style="
+    background-image: url('../../assets/UserBG1.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+  "
+>
+  <nav
+    class="flex flex-row justify-between items-center bg-[#000080] w-full px-4 backdrop-blur"
+  >
+    <img
+      routerLink="/"
+      src="../../assets/LogoBG1.png"
+      alt="Logo image "
+      class="w-64 h-auto py-2 cursor-pointer"
+    />
+    <ul
+      class="flex justify-between space-x-6 font-victormono text-xl font-bold text-gray-200 cursor-pointer"
+    >
+      <li mat-button (click)="openDialog()">
+        Admin-Details<i class="fa fa-solid fa-circle-info px-2"></i>
+      </li>
+      <li (click)="logout()">
+        Logout<i class="fa fa-solid fa-right-from-bracket px-2"></i>
+      </li>
+    </ul>
+  </nav>
+  <div class="min-h-[calc(100vh-151.31px)] flex justify-center">
+    <table class="table-auto bg-[#FFEFFF] p-4 overflow-auto m-4 h-[200px] box-shadow">
+      <span class="text-green-400 p-auto">{{ deleteMessage }}</span>
+      <thead class="border border-red-500 rounded-lg">
+        <tr>
+          <th class="p-4">Id</th>
+          <th class="p-4">Username</th>
+          <th class="p-4">Name</th>
+          <th class="p-4">Role</th>
+          <th class="p-4">Action</th>
+        </tr>
+      </thead>
+      <tbody class="overflow-y-auto">
+        <tr *ngFor="let user of userList">
+          <td class="p-4">{{ user.id }}</td>
+          <td class="p-4">{{ user.username }}</td>
+          <td class="p-4">{{ user.name }}</td>
+          <td class="p-4">{{ user.role }}</td>
+          <td class="p-4">
+            <button
+              class="bg-gray-600 p-2 rounded-md hover:bg-gray-100"
+              (click)="deleteUser(user.id)"
+            >
+              <i class="fa fa-trash-alt text-red-500 m-2"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <footer
+    class="flex flex-row justify-center items-center bg-[#000080] w-full px-4 backdrop-blur py-4"
+  >
+    <p class="font-victormono text-white">©Copyright Reserved</p>
+  </footer>
+</div>

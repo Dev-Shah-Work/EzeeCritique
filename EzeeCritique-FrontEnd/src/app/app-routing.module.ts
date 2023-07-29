@@ -7,6 +7,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { UserEntryComponent } from './user-entry/user-entry.component';
 import { InitialPageComponent } from './initial-page/initial-page.component';
 import { UserAuthGuard } from './user-auth-guard.guard';
+import { AdminPageComponent } from './admin-page/admin-page.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,10 @@ const routes: Routes = [
     path: 'user-entry',
     component: UserEntryComponent,
   },
+  {
+    path : 'admin-page',
+    component : AdminPageComponent
+  }
 ];
 
 @NgModule({

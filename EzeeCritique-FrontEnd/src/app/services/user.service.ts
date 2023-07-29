@@ -57,4 +57,20 @@ export class UserService implements OnInit {
   // getUserById(data: any): Observable<User> {
   //   return this.http.post<User>(this.baseURL + '/getUserId', data);
   // }
+  getAllUsers() {
+    var token = localStorage.getItem('token');
+    return this.http.get<User[]>(this.baseURL + '/getAllUsers', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  deleteUser(data: any) {
+    var token = localStorage.getItem('token');
+    return this.http.post<string>(this.baseURL + '/deleteUser', data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
 }
